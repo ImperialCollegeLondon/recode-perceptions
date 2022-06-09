@@ -72,7 +72,6 @@ def create_image_df(data_dir):
     """DataFrame of image names (as found in metadata.csv)
     and location of image file"""
     files = os.listdir(data_dir)
-    logger.info(files)
     img_id = get_image_id(files)
     df_img = pd.DataFrame({"file": files, "location_id": img_id})
     return df_img
