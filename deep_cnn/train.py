@@ -45,13 +45,13 @@ def train_step(
 
                 # Format expected input dimensions and send data to device
                 train_x = data.to(device)
-                y = target.unsqueeze(dim=1).to(device)
+                y = target.to(device)
 
                 # 1. Forward Pass
                 output = model.forward(train_x)
 
                 # 2. Calculate and accumulate loss
-                loss = loss_fn(output.float(), y.float())
+                loss = loss_fn(output, y)
                 running_loss += loss.detach().item()
 
                 # 3. Optimzer zero grad
@@ -104,13 +104,13 @@ def test_step(
             # Format expected input dimensions and send data to device
             test_x = data[0].to(device)
 
-            y = data[1].unsqueeze(dim=1).to(device)
+            y = data[1].to(device)
 
             # 1. Forward Pass
             output = model.forward(test_x)
 
             # 2. Calculate and accumulate loss
-            loss = loss_fn(output.float(), y.float())
+            loss = loss_fn(output, y)
             running_loss += loss.detach().item()
 
         # Adjust metrics to get average loss and accuracy per batch

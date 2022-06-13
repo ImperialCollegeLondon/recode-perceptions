@@ -19,12 +19,9 @@ root_dir$ python deep_cnn/train_model.py\
 --epochs=1                              \
 --batch_size=56                         \
 --model='resnet101'                     \
---oversample=True                       \
 --lr=1e-3                               \
---study_id='50a68a51fdc9f05596000002'   \
 --data_dir=data_dir                     \
 --root_dir=root_dir                     \
---metadata=meta_dir                     \
 ```
 
 where root_dir is your local path to recode-perceptions, and data_dir is your path to recode-perceptions/input/images/. If you have not yet downloaded the images, you can run the test images, tests/test_input/test_images/. Similarly for metadata.

@@ -17,9 +17,6 @@ def argument_parser(args=None):
         "--pre", default="resnet", type=str, help="pre processing for image input"
     )
     parser.add_argument(
-        "--oversample", default=False, type=bool, help="whether to oversample"
-    )
-    parser.add_argument(
         "--root_dir",
         default=Path(__file__).parent.parent,
         help="path to recode-perceptions",
@@ -38,7 +35,6 @@ def argument_parser(args=None):
         help="unique name to identify hyperparameter choices",
     )
     parser.add_argument("--data_dir", default="input/images/", type=str, help="dataset")
-    parser.add_argument("--metadata", default="input/meta/", type=str, help="dataset")
     parser.add_argument("--verbose", default=False, type=bool, help="intermed. outputs")
     return parser.parse_args(args)
 

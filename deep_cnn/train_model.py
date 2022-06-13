@@ -10,7 +10,6 @@ import torch
 import torch.nn as nn
 
 import deep_cnn.train as train
-from deep_cnn import datautils
 from deep_cnn.dataset_generator import dataloader
 from deep_cnn.model_builder import MyCNN
 from deep_cnn.utils import argument_parser, detect_device
@@ -36,16 +35,6 @@ def main(opt):
     # wandb.login(key='')
     # wandb.init(id = id, project='place_pulse_phd', entity='emilymuller1991')
 
-    # load image metadata
-    df_train, df_val, df_test = datautils.pp_process_input(
-        perception_study=opt.study_id,
-        root_dir=opt.root_dir,
-        data_dir=opt.data_dir,
-        metadata=opt.metadata,
-        oversample=opt.oversample,
-        verbose=opt.verbose,
-    )
-
     # create dataloaders
     params = {
         "batch_size": opt.batch_size,
@@ -54,12 +43,16 @@ def main(opt):
         "pin_memory": True,
         "drop_last": False,
     }
-    train_dataloader = dataloader(df_train, opt.data_dir, opt.pre, "train", params)
-    validation_dataloader = dataloader(df_val, opt.data_dir, opt.pre, "val", params)
-    test_dataloader = dataloader(df_test, opt.data_dir, opt.pre, "test", params)
+    train_dataloader, N = dataloader(
+        opt.data_dir, opt.root_dir, opt.pre, "train", params
+    )
+    validation_dataloader, _ = dataloader(
+        opt.data_dir, opt.root_dir, opt.pre, "val", params
+    )
+    test_dataloader, _ = dataloader(opt.data_dir, opt.root_dir, opt.pre, "test", params)
 
     # initialise model
-    model = MyCNN()
+    model = MyCNN(n_classes=N)
     model.to(device)
     logger.info("Model loaded with %s parameters" % str(model.count_params()))
 
@@ -71,7 +64,7 @@ def main(opt):
         return opt.lr * 1 / (1.0 + (opt.lr / opt.epochs) * epoch)
 
     scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, lambda_decay)
-    loss_fn = nn.MSELoss()
+    loss_fn = nn.CrossEntropyLoss()
 
     # Start the timer
     start_time = timer()
