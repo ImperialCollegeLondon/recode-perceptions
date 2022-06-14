@@ -12,7 +12,7 @@ import torch.nn as nn
 import deep_cnn.train as train
 from deep_cnn.dataset_generator import dataloader
 from deep_cnn.model_builder import MyCNN
-from deep_cnn.utils import argument_parser, detect_device
+from deep_cnn.utils import argument_parser, detect_device, output_plots
 
 # import wandb
 # logging config
@@ -82,6 +82,7 @@ def main(opt):
         save_model=Path(opt.root_dir, "outputs/models/", opt.run_name + ".pt"),
         wandb=False,
     )
+    output_plots(train_val_loss, opt.root_dir, opt.run_name)
 
     # End the timer and logger.info out how long it took
     end_time = timer()
