@@ -49,6 +49,7 @@ def detect_device():
 
 def output_plots(results, root_dir, run_name):
     df = pd.DataFrame(results)
+    root_dir = Path(root_dir)
     save_path = (
         root_dir
         / "outputs"
