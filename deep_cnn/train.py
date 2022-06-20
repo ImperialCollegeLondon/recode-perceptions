@@ -1,13 +1,12 @@
-import logging
 from typing import Dict
 
 import numpy as np
 import torch
 from tqdm import tqdm
+from utils import accuracy
 
-from deep_cnn.utils import accuracy
+from .logger import logger
 
-logger = logging.getLogger("testing")
 """
 Contains functions for training and testing a PyTorch model.
 """
@@ -142,7 +141,7 @@ def train(
     Passes a target PyTorch models through train and validation set
     functions for a number of epochs, training and validating the model
     in the same epoch loop.
-    Calculates, logger.infos and stores evaluation metrics throughout.
+    Calculates, prints and stores evaluation metrics throughout.
 
     Args:
     model: A PyTorch model to be trained and validated.
@@ -192,7 +191,7 @@ def train(
             model=model, test_dataloader=val_dataloader, loss_fn=loss_fn, device=device
         )
 
-        # logger.info out what's happening
+        # print out what's happening
         logger.info(
             f"Epoch: {epoch+1} | "
             f"train_loss: {train_loss:.4f} | "

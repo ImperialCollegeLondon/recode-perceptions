@@ -1,30 +1,23 @@
-import logging
-import os
-import sys
 from pathlib import Path
 from timeit import default_timer as timer
-
-sys.path.append(os.getcwd())
 
 import torch
 import torch.nn as nn
 
-import deep_cnn.train as train
-from deep_cnn.dataset_generator import dataloader
-from deep_cnn.model_builder import MyCNN
-from deep_cnn.utils import argument_parser, detect_device, output_plots
+from . import train
+from .dataset_generator import dataloader
+from .logger import logger
+from .model_builder import MyCNN
+from .utils import detect_device, output_plots
 
 # import wandb
 # logging config
-logger = logging.getLogger("testing")
-logger.setLevel(logging.INFO)
+# logger.logger()
 
 
 def main(opt):
 
-    # log output to file
-    handler = logging.FileHandler(os.getcwd() + "/outputs/logger/%s.log" % opt.run_name)
-    logger.addHandler(handler)
+    # log output
     logger.info("Model running with parameters: %s" % opt)
 
     # detect devices
@@ -103,12 +96,6 @@ def main(opt):
         )
     )
 
-
-if __name__ == "__main__":
-    # parse arguments
-    opt = argument_parser(sys.argv[1:])
-
-    main(opt)
 
 # PLOTS
 # plot training loss

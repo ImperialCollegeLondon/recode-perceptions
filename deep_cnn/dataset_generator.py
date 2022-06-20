@@ -1,11 +1,10 @@
-import logging
 import os
 
 import torchvision.datasets as datasets
 import torchvision.transforms as transforms
 from torch.utils.data import DataLoader
 
-logger = logging.getLogger("testing")
+from .logger import logger
 
 
 def preprocessing(transform):
