@@ -3,9 +3,9 @@ from typing import Dict
 import numpy as np
 import torch
 from tqdm import tqdm
-from utils import accuracy
 
 from .logger import logger
+from .utils import accuracy
 
 """
 Contains functions for training and testing a PyTorch model.
