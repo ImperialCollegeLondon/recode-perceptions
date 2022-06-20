@@ -1,4 +1,5 @@
 import argparse
+from datetime import datetime
 from pathlib import Path
 
 import pandas as pd
@@ -48,7 +49,12 @@ def detect_device():
 
 def output_plots(results, root_dir, run_name):
     df = pd.DataFrame(results)
-    save_path = root_dir / "outputs/results" / run_name / ".csv"
+    save_path = (
+        root_dir
+        / "outputs"
+        / "results"
+        / (run_name + f"{datetime.now().strftime('%Y%m%d_%H-%M-%S')}.log" + ".csv")
+    )
     df.to_csv(save_path)
 
 
