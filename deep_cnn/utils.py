@@ -53,7 +53,7 @@ def output_plots(results, root_dir, run_name):
         root_dir
         / "outputs"
         / "results"
-        / (run_name + f"{datetime.now().strftime('%Y%m%d_%H-%M-%S')}.log" + ".csv")
+        / (run_name + f"{datetime.now().strftime('%Y%m%d_%H-%M-%S')}.csv")
     )
     df.to_csv(save_path)
 
