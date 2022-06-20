@@ -94,35 +94,35 @@ def test_step(
     loss_fn: A PyTorch loss function to calculate loss on test data.
     device: A target device to compute on (e.g. "cuda" or "cpu").
     """
+    with torch.no_grad():
+        # Put model in eval
+        model.eval()
 
-    # Put model in eval
-    model.eval()
+        # Setup train loss over epoch
+        running_loss = 0
 
-    # Setup train loss over epoch
-    running_loss = 0
+        # loop over val/test batches
+        if test_dataloader is not None:
+            for i, data in enumerate(test_dataloader):
+                # Format expected input dimensions and send data to device
+                test_x = data[0].to(device)
 
-    # loop over val/test batches
-    if test_dataloader is not None:
-        for i, data in enumerate(test_dataloader):
-            # Format expected input dimensions and send data to device
-            test_x = data[0].to(device)
+                y = data[1].to(device)
 
-            y = data[1].to(device)
+                # 1. Forward Pass
+                output = model.forward(test_x)
 
-            # 1. Forward Pass
-            output = model.forward(test_x)
+                # 2. Calculate/accumulate loss and calculate accuracy
+                loss = loss_fn(output, y)
+                running_loss += loss.detach().item()
 
-            # 2. Calculate/accumulate loss and calculate accuracy
-            loss = loss_fn(output, y)
-            running_loss += loss.detach().item()
+                prec1, prec5 = accuracy(output.data, y, topk=(1, 5))
 
-            prec1, prec5 = accuracy(output.data, y, topk=(1, 5))
-
-        # Adjust metrics to get average loss and accuracy per batch
-        avg_test_loss = running_loss / (len(test_dataloader))
-        return avg_test_loss, (prec1.detach().item(), prec5.detach().item())
-    else:
-        return np.nan, np.nan, np.nan
+            # Adjust metrics to get average loss and accuracy per batch
+            avg_test_loss = running_loss / (len(test_dataloader))
+            return avg_test_loss, (prec1.detach().item(), prec5.detach().item())
+        else:
+            return np.nan, np.nan, np.nan
 
 
 def train(

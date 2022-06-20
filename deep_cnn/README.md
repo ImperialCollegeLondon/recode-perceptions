@@ -24,7 +24,7 @@ root_dir$ python deep_cnn/train_model.py\
 --root_dir=root_dir                     \
 ```
 
-where root_dir is your local path to recode-perceptions, and data_dir is your path to recode-perceptions/input/images/. If you have not yet downloaded the images, you can run the test images, tests/test_input/test_images/. Similarly for metadata.
+where root_dir is your local path to recode-perceptions, and data_dir is your path to input/places365standard_easyformat/places365_standard. If you have not yet downloaded the images, you can run the test images, tests/test_input/test_images/. Similarly for metadata.
 
 You should see the following output in your terminal:
 

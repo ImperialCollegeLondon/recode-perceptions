@@ -48,7 +48,7 @@ def detect_device():
 
 def output_plots(results, root_dir, run_name):
     df = pd.DataFrame(results)
-    df.to_csv(root_dir + "outputs/results/" + run_name + ".csv")
+    df.to_csv(root_dir + "/outputs/results/" + run_name + ".csv")
 
 
 def accuracy(output, target, topk=(1,)):

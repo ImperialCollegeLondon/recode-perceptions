@@ -22,7 +22,7 @@ logger.setLevel(logging.INFO)
 
 def main(opt):
 
-    # log output
+    # log output to file
     handler = logging.FileHandler(os.getcwd() + "/outputs/logger/%s.log" % opt.run_name)
     logger.addHandler(handler)
     logger.info("Model running with parameters: %s" % opt)
@@ -30,7 +30,7 @@ def main(opt):
     # detect devices
     device = detect_device()
 
-    # # WANDB for HO
+    # WANDB for HO
     # id = '%s' % opt.wandb_name
     # wandb.login(key='')
     # wandb.init(id = id, project='place_pulse_phd', entity='emilymuller1991')
