@@ -1,50 +1,31 @@
-import logging
 import os
-import sys
 from pathlib import Path
 from timeit import default_timer as timer
 
-sys.path.append(os.getcwd())
-
 import torch
 import torch.nn as nn
+import wandb
 
-import deep_cnn.train as train
-from deep_cnn import datautils
-from deep_cnn.dataset_generator import dataloader
-from deep_cnn.model_builder import MyCNN
-from deep_cnn.utils import argument_parser, detect_device
-
-# import wandb
-# logging config
-logger = logging.getLogger("testing")
-logger.setLevel(logging.INFO)
+from . import train
+from .dataset_generator import dataloader
+from .logger import logger
+from .model_builder import MyCNN
+from .utils import detect_device, output_plots
 
 
 def main(opt):
 
     # log output
-    handler = logging.FileHandler(os.getcwd() + "/outputs/logger/%s.log" % opt.run_name)
-    logger.addHandler(handler)
     logger.info("Model running with parameters: %s" % opt)
 
     # detect devices
     device = detect_device()
 
-    # # WANDB for HO
-    # id = '%s' % opt.wandb_name
-    # wandb.login(key='')
-    # wandb.init(id = id, project='place_pulse_phd', entity='emilymuller1991')
-
-    # load image metadata
-    df_train, df_val, df_test = datautils.pp_process_input(
-        perception_study=opt.study_id,
-        root_dir=opt.root_dir,
-        data_dir=opt.data_dir,
-        metadata=opt.metadata,
-        oversample=opt.oversample,
-        verbose=opt.verbose,
-    )
+    # WANDB for HO
+    if opt.wandb:
+        id = "%s" % opt.run_name
+        wandb.login(key=os.getenv("WB_KEY"))
+        wandb.init(id=id, project=os.getenv("WB_PROJECT"), entity=os.getenv("WB_USER"))
 
     # create dataloaders
     params = {
@@ -54,12 +35,15 @@ def main(opt):
         "pin_memory": True,
         "drop_last": False,
     }
-    train_dataloader = dataloader(df_train, opt.data_dir, opt.pre, "train", params)
-    validation_dataloader = dataloader(df_val, opt.data_dir, opt.pre, "val", params)
-    test_dataloader = dataloader(df_test, opt.data_dir, opt.pre, "test", params)
+    train_dataloader, val_dataloader, N = dataloader(
+        opt.data_dir, opt.root_dir, opt.pre, "train", params
+    )
+    test_dataloader, _, N = dataloader(
+        opt.data_dir, opt.root_dir, opt.pre, "val", params
+    )
 
     # initialise model
-    model = MyCNN()
+    model = MyCNN(n_classes=N)
     model.to(device)
     logger.info("Model loaded with %s parameters" % str(model.count_params()))
 
@@ -71,7 +55,7 @@ def main(opt):
         return opt.lr * 1 / (1.0 + (opt.lr / opt.epochs) * epoch)
 
     scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, lambda_decay)
-    loss_fn = nn.MSELoss()
+    loss_fn = nn.CrossEntropyLoss()
 
     # Start the timer
     start_time = timer()
@@ -80,15 +64,16 @@ def main(opt):
     train_val_loss = train.train(
         model=model,
         train_dataloader=train_dataloader,
-        val_dataloader=validation_dataloader,
+        val_dataloader=val_dataloader,
         optimizer=optimizer,
         scheduler=scheduler,
         loss_fn=loss_fn,
         epochs=opt.epochs,
         device=device,
         save_model=Path(opt.root_dir, "outputs/models/", opt.run_name + ".pt"),
-        wandb=False,
+        wb=opt.wandb,
     )
+    output_plots(train_val_loss, opt.root_dir, opt.run_name)
 
     # End the timer and logger.info out how long it took
     end_time = timer()
@@ -109,12 +94,6 @@ def main(opt):
         )
     )
 
-
-if __name__ == "__main__":
-    # parse arguments
-    opt = argument_parser(sys.argv[1:])
-
-    main(opt)
 
 # PLOTS
 # plot training loss

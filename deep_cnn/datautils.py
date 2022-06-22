@@ -1,4 +1,3 @@
-import logging
 import os
 from pathlib import Path
 
@@ -6,7 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-logger = logging.getLogger("testing")
+from .logger import logger
 
 
 def pp_process_input(
