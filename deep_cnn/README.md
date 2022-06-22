@@ -101,6 +101,8 @@ export $WB_USER="weights_and_biases_user"
 
 If you now run the scripts with --wandb=True, you should begin to see the metrics being tracked on the platform:
 
+![alt text](./learning/Images/wandb.png "Logging metrics using wandb")
+
 ### Export to HPC
 
 
