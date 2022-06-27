@@ -94,9 +94,9 @@ When performing hyperparamter optimisation, we will not evaluate our test perfor
 We will use weights and biases to track our model training and validation. This platform uses a lightweight python package to log metrics during training. To use this, you will need to create an educational account at [https://wandb.ai/site](https://wandb.ai/site). Once you have configured your user credentials, create a new project called recode-perceptions. This folder will log all of our training runs. In order for python to get access to your personal user credentials, you will have to set them as environmental variables which python then accesses using os.getenv("password"). Set your environmental variables as follows:
 
 ```
-root_dir$ export $WB_KEY=weights_and_biases_login_key
-export $WB_project="recode-perceptions"
-export $WB_USER="weights_and_biases_user"
+root_dir$ export WB_KEY=weights_and_biases_login_key
+export WB_PROJECT="recode-perceptions"
+export WB_USER="weights_and_biases_user"
 ```
 
 If you now run the scripts with --wandb=True, you should begin to see the metrics being tracked on the platform:
@@ -104,5 +104,7 @@ If you now run the scripts with --wandb=True, you should begin to see the metric
 ![alt text](./learning/Images/wandb.png "Logging metrics using wandb")
 
 ### Export to HPC
+
+Running the scripts on the HPC will just require setting up the remote environment.
 
 
