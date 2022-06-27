@@ -1,19 +1,32 @@
 #!/bin/sh
-#PBS -lselect=1:ncpus=4:mem=16gb:ompthreads=4
 #PBS -lwalltime=24:00:00
+#PBS -lselect=1:ncpus=4:mem=24gb:ngpus=1:gpu_type=RTX6000
 
 module load anaconda3/personal
+module load cuda/10.2
 conda create -n recode-perceptions python=3.7
 source activate recode-perceptions
-conda install -r requirements.txt recode-perceptions
+conda install --file $HOME/emily/phd/recode-perceptions/requirements.txt
 
-python3 -m deep_cnn                     \
+conda install pytorch torchvision torchaudio cudatoolkit=10.2 -c pytorch
+conda install pytorch==1.9.1 torchvision==0.10.1 torchaudio==0.9.1 cudatoolkit=11.3 -c pytorch -c conda-forge
+conda install -c conda-forge wandb
+conda install -c conda-forge tqdm
+conda install pandas
+conda install matplotlib
+
+export PYTHONPATH=$HOME/emily/phd/recode-perceptions  # change to your export repo path to python so as to run deep_cnn as module
+export WB_KEY=weights_and_biases_login_key            # change to your own wandb key
+export WB_project="recode-perceptions"                # change to the name of wandb project
+export WB_USER="weights_and_biases_user"              # change to your own username
+
+python -m deep_cnn \
 --epochs=1                              \
 --batch_size=56                         \
 --model='resnet18'                      \
 --lr=1e-3                               \
---data_dir=data_dir                     \
---root_dir=root_dir                     \
+--data_dir=input/places365standard_easyformat/places365_standard/                    \
+--root_dir=$PYTHONPATH                  \
 --wandb=True                            \
 --run_name=hpc_export                   \
 
