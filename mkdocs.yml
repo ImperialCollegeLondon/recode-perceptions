@@ -1,0 +1,55 @@
+site_name: ReCoDE Perceptions
+repo_url: https://github.com/ImperialCollegeLondon/recode-perceptions
+edit_uri: tree/main/docs/
+theme:
+  # recommend leaving this as is
+  name: material
+  # favicon: favicon.png
+
+  palette:
+    # Light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: deep blue
+      accent: deep blue
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to dark mode
+
+    # Dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: deep orange
+      accent: deep orange
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to light mode
+
+  # SPA behaviour
+  features:
+    - navigation.instant
+    - navigation.top
+
+plugins:
+  - tags
+  - search
+  - include-markdown # https://github.com/mondeja/mkdocs-include-markdown-plugin
+  - mkdocs-jupyter
+
+markdown_extensions:
+  - meta
+  - mdx_math:
+      enable_dollar_delimiter: True
+  - pymdownx.highlight:
+      anchor_linenums: false
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+
+extra_javascript:
+  - https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML
+
+# Have to set this to false to be able to display images with paths in both
+# Jupyter notebooks and Mkdocs. Otherwise, Mkdocs-jupyter will load images from
+# /images/... instead of images/....
+use_directory_urls: false
