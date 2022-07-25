@@ -4,7 +4,7 @@
 
 module load anaconda3/personal
 module load cuda/10.2
-source activate recode
+source activate perceptions
 
 export PYTHONPATH=$HOME/user/recode-perceptions/                # path to recode-perceptions to run deep_cnn as module
 export WB_KEY=API_KEY
