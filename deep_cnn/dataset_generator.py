@@ -27,7 +27,7 @@ def preprocessing(transform):
         pass
 
 
-def dataloader(data_dir, root_dir, transform, split, params, val_split=0.05):
+def dataloader(data_dir, root_dir, transform, split, params, val_split=0.2):
     """Creates dataloader from
     train, val data folders"""
 

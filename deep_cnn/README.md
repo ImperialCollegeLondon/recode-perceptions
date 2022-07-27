@@ -119,7 +119,7 @@ You will be prompted to enter your password. You now have terminal access to you
 
 ### Dataset
 
-The dataset can be downloaded by executing the data_download.sh script.
+The dataset can be downloaded by executing the data_download.sh script. You will first need to enter your remote path to the recode-perceptions directory (line 5).
 
 GLOBIGNORE specifies folders which should be ignored when performing recursive deletes.
 
@@ -140,7 +140,7 @@ This file first loads the conda and cuda module and then initiaties a Python 3.7
 
 ### Submitting jobs to the HPC
 
-Once the environment is configured, we can submit the programme requesting access to HPC GPU's. First, copy over your wandb.ai credentials into the submit.pbs script (lines 10-12). Then run:
+Once the environment is configured, we can submit the programme requesting access to HPC GPU's. First, configure the path to recode-perceptions directory in your drive (line 9). This will allow python ro run deep_cnn as a module. Then, copy over your wandb.ai credentials into the submit.pbs script (lines 10-12). Then run:
 
 ```
 qsub submit.pbs

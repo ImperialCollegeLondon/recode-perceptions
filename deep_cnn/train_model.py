@@ -25,21 +25,21 @@ def main(opt):
     if opt.wandb:
         id = "%s" % opt.run_name
         wandb.login(key=os.getenv("WB_KEY"))
-        wandb.init(id=id, project=os.getenv("WB_PROJECT"), entity=os.getenv("WB_USER"))
+        wandb.init(id=id, project=os.getenv("WB_PROJECT"), entity=os.getenv("WB_USER"), settings=wandb.Settings(start_method='fork'))
 
     # create dataloaders
     params = {
         "batch_size": opt.batch_size,
         "shuffle": True,
-        "num_workers": 1,
-        "pin_memory": True,
+        "num_workers": 4,
+        "pin_memory": False,
         "drop_last": False,
     }
     train_dataloader, val_dataloader, N = dataloader(
         opt.data_dir, opt.root_dir, opt.pre, "train", params
     )
     test_dataloader, _, _ = dataloader(
-        opt.data_dir, opt.root_dir, opt.pre, "val", params
+        opt.data_dir, opt.root_dir, opt.pre, "test", params, val_split=0
     )
 
     # initialise model

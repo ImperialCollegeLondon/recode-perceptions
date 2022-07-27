@@ -3,13 +3,16 @@ input/meta/
 input/test_images/
 input/images.zip
 input/places365standard_easyformat
+input/places365standard_easyformat.tar
 outputs/
 venv/
 model/
 wandb/
 deep_cnn/logging.conf
 wandb/
-
+submit_emily_local.pbs
+submit.pbs.e*
+submit.pbs.o*
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

@@ -2,8 +2,9 @@
 #PBS -l select=1:ncpus=1:mem=1gb
 
 cd $PBS_O_WORKDIR
+cd emily/phd/recode-perceptions       # ENTER PATH to recode-perceptions from $PBS_O_WORKDIR
 
-wget -O input/places365standard_easyformat.tar http://data.csail.mit.edu/places/places365/places365standard_easyformat.tar
+wget http://data.csail.mit.edu/places-private/places365/train_256_places365standard.tar -O input/places365standard_easyformat.tar
 
 cd input
 tar -xvf places365standard_easyformat.tar
