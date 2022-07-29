@@ -1,4 +1,3 @@
-apartment_building-outdoor
 construction_site
 crosswalk
 highway
@@ -7,4 +6,5 @@ park
 residential_neighborhood
 shopfront
 street
+slum
 yard

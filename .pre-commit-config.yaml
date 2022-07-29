@@ -2,6 +2,9 @@ repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.3.0
     hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
       - id: check-merge-conflict
       - id: debug-statements
   - repo: https://github.com/timothycrosley/isort
@@ -21,8 +24,3 @@ repos:
     rev: "v0.961"
     hooks:
       - id: mypy
-  - repo: https://github.com/markdownlint/markdownlint
-    rev: "v0.9.0"
-    hooks:
-      - id: markdownlint
-        args: ["-r", "~MD013"]
