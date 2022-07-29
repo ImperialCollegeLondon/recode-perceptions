@@ -4,6 +4,7 @@ from timeit import default_timer as timer
 
 import torch
 import torch.nn as nn
+
 import wandb
 
 from . import train
@@ -25,7 +26,12 @@ def main(opt):
     if opt.wandb:
         id = "%s" % opt.run_name
         wandb.login(key=os.getenv("WB_KEY"))
-        wandb.init(id=id, project=os.getenv("WB_PROJECT"), entity=os.getenv("WB_USER"), settings=wandb.Settings(start_method='fork'))
+        wandb.init(
+            id=id,
+            project=os.getenv("WB_PROJECT"),
+            entity=os.getenv("WB_USER"),
+            settings=wandb.Settings(start_method="fork"),
+        )
 
     # create dataloaders
     params = {
