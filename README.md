@@ -132,7 +132,3 @@ recode-perceptions
 │   └───places_test_input
 │   │   ...
 ```
-
-## License
-
-This code and the pretrained model is licensed under the MIT licence.
