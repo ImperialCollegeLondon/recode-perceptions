@@ -44,11 +44,11 @@ def main(opt):
         opt.data_dir, opt.root_dir, opt.pre, "train", params
     )
     test_dataloader, _, _ = dataloader(
-        opt.data_dir, opt.root_dir, opt.pre, "test", params, val_split=0
+        opt.data_dir, opt.root_dir, opt.pre, "val", params, val_split=0
     )
 
     # initialise model
-    model = MyCNN(n_classes=N)
+    model = MyCNN(model_base = opt.model, n_classes=N)
     model.to(device)
     logger.info("Model loaded with %s parameters" % str(model.count_params()))
 

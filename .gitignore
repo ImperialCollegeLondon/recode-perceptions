@@ -10,6 +10,7 @@ model/
 wandb/
 deep_cnn/logging.conf
 wandb/
+docs/models/
 submit_emily_local.pbs
 submit.pbs.e*
 submit.pbs.o*
