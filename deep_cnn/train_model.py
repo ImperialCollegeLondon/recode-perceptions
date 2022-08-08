@@ -48,7 +48,7 @@ def main(opt):
     )
 
     # initialise model
-    model = MyCNN(model_base = opt.model, n_classes=N)
+    model = MyCNN(model_base=opt.model, n_classes=N)
     model.to(device)
     logger.info("Model loaded with %s parameters" % str(model.count_params()))
 
