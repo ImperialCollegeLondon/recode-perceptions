@@ -12,7 +12,7 @@ Let's check the model training runs locally (albeit slowly without a GPU). From 
 python3 -m deep_cnn                     \
 --epochs=1                              \
 --data_dir=tests/places_test_input      \
---wandb=False                           \
+--bacth_size=1
 ```
 
 A brief description of all arguments is returned with the following:
