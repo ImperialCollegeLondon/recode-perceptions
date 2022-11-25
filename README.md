@@ -78,7 +78,7 @@ All the dependencies are installed along with the virtual environment. We will m
 The `pytest` and pre-commit module is required for running tests and formatting. This can be installed by running:
 
 ```sh
-conda install --file requirements_dev.txt
+conda install --file requirements-dev.txt
 ```
 
 Now run the tests below to make sure everything is set up correctly. Then, proceed to the video.
