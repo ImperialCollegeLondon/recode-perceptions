@@ -90,6 +90,7 @@ Once you have configured your user credentials, create a new project called reco
 export WB_KEY=API_KEY
 export WB_PROJECT="recode-perceptions"
 export WB_USER="username"
+export WANDB_MODE=online
 ```
 
 If you now run the scripts with `--wandb=True`, you should begin to see the metrics being tracked on the platform:
