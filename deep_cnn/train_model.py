@@ -14,7 +14,6 @@ from .utils import detect_device, output_plots
 
 
 def main(opt):
-
     # log output
     logger.info("Model running with parameters: %s" % opt)
 
